@@ -40,11 +40,12 @@ byte seven_segment_digits[16][7] = { { 0,0,0,0,0,0,1 }, // display '0'
                                      { 0,0,0,1,1,1,1 }, // display '7'
                                      { 0,0,0,0,0,0,0 }, // display '8'
                                      { 0,0,0,1,1,0,0 }, // display '9'
-                                     { 1,1,1,0,1,1,1 }, // display 'A'
-                                     { 0,0,1,1,1,1,1 }, // display 'B'
-                                     { 0,0,1,0,1,1,1 }, // display 'C'
-                                     { 1,1,1,0,1,1,1 }, // display 'D'
-                                     { 1,1,1,0,1,1,1 }, // display 'E'
+                                     { 0,0,0,1,0,0,0 }, // display 'A'
+                                     { 1,1,0,0,0,0,0 }, // display 'b'
+                                     { 0,1,1,0,0,0,1 }, // display 'C'
+                                     { 1,0,0,0,0,1,0 }, // display 'd'
+                                     { 0,1,1,0,0,0,0 }, // display 'E'
+                                     { 0,1,1,1,0,0,0 }  // display 'F'
                                    };
 
 // Common Cathode version
@@ -90,11 +91,16 @@ void setup() {
   }
   digitalWrite(10, HIGH);  // start with the dot off
 
+  /*
+  for (int i = 0; i < 7; i++){
+    digitalWrite(i+3, seven_segment_digits[15][i]);
+  }
+  */
   // New code
   //digitalWrite(3, 0);
 }
 
-void test(){
+void tick(){
   for (int cur = 3; cur < 10; cur++) {
     for (int pin = 3; pin < 10; pin++) {
       if (cur == pin) {
@@ -107,12 +113,8 @@ void test(){
   }
 }
 
-/* In the loop section we will begin displaying the different numbers.
- * Add delay() or sleep() to give some time between the numbers changing.
- */
-void loop() {
-  /*
-  for (int count = 10; count > 0; --count) {
+void disp_all(){
+  for (int count = 16; count > 0; --count) {
     int pin = 3;
     for (int segCount = 0; segCount < 7; ++segCount) {
       digitalWrite(pin, seven_segment_digits[count-1][segCount]);
@@ -120,7 +122,13 @@ void loop() {
     }
     delay(1000); // this is the same as delay() but saves power
   }
-  */
-  test();
-  delay(5000); // this is the same as delay() but saves power
+}
+
+/* In the loop section we will begin displaying the different numbers.
+ * Add delay() or sleep() to give some time between the numbers changing.
+ */
+void loop() {
+  //test();
+  disp_all();
+  delay(2000); // this is the same as delay() but saves power
 }
