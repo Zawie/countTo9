@@ -30,7 +30,7 @@
 // anode displays, change the 1's to 0's and 0's to 1's
 // 1 = LED on, 0 = LED off, in this order:
 // Common Anode version
-byte seven_segment_digits[10][7] = { { 0,0,0,0,0,0,1 }, // display '0'
+byte seven_segment_digits[16][7] = { { 0,0,0,0,0,0,1 }, // display '0'
                                      { 1,0,0,1,1,1,1 }, // display '1'
                                      { 0,0,1,0,0,1,0 }, // display '2'
                                      { 0,0,0,0,1,1,0 }, // display '3'
@@ -39,7 +39,12 @@ byte seven_segment_digits[10][7] = { { 0,0,0,0,0,0,1 }, // display '0'
                                      { 0,1,0,0,0,0,0 }, // display '6'
                                      { 0,0,0,1,1,1,1 }, // display '7'
                                      { 0,0,0,0,0,0,0 }, // display '8'
-                                     { 0,0,0,1,1,0,0 }  // display '9'
+                                     { 0,0,0,1,1,0,0 }, // display '9'
+                                     { 1,1,1,0,1,1,1 }, // display 'A'
+                                     { 0,0,1,1,1,1,1 }, // display 'B'
+                                     { 0,0,1,0,1,1,1 }, // display 'C'
+                                     { 1,1,1,0,1,1,1 }, // display 'D'
+                                     { 1,1,1,0,1,1,1 }, // display 'E'
                                    };
 
 // Common Cathode version
@@ -71,6 +76,7 @@ connected to work, but it's ok to connect both if you want.
 /* In the setup function, we set our LED pins as OUTPUT.
  */
 void setup() {
+
   pinMode(3, OUTPUT); // set segment A as output
   pinMode(4, OUTPUT); // set segment B as output
   pinMode(5, OUTPUT); // set segment C as output
@@ -83,12 +89,29 @@ void setup() {
     digitalWrite(i, HIGH);
   }
   digitalWrite(10, HIGH);  // start with the dot off
+
+  // New code
+  //digitalWrite(3, 0);
+}
+
+void test(){
+  for (int cur = 3; cur < 10; cur++) {
+    for (int pin = 3; pin < 10; pin++) {
+      if (cur == pin) {
+        digitalWrite(pin, 0);
+      } else {
+        digitalWrite(pin, 1);
+      }
+    }
+    delay(1000); // this is the same as delay() but saves power
+  }
 }
 
 /* In the loop section we will begin displaying the different numbers.
  * Add delay() or sleep() to give some time between the numbers changing.
  */
 void loop() {
+  /*
   for (int count = 10; count > 0; --count) {
     int pin = 3;
     for (int segCount = 0; segCount < 7; ++segCount) {
@@ -97,5 +120,7 @@ void loop() {
     }
     delay(1000); // this is the same as delay() but saves power
   }
-  delay(1000); // this is the same as delay() but saves power
+  */
+  test();
+  delay(5000); // this is the same as delay() but saves power
 }
