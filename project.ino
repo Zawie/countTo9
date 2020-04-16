@@ -23,8 +23,8 @@
   This example code is in the public domain.
 */
 
-// Define the LED digit patterns for 0 - 9 in a 2 dimensional array.
-// The 2D array (an array of arrays or a matrix) has 10 arrays that each
+// Define the LED digit patterns for 0 - F in a 2 dimensional array.
+// The 2D array (an array of arrays or a matrix) has 16 arrays that each
 // contain 7 values.
 // Note that these patterns are for common cathode displays. For common
 // anode displays, change the 1's to 0's and 0's to 1's
@@ -90,14 +90,6 @@ void setup() {
     digitalWrite(i, HIGH);
   }
   digitalWrite(10, HIGH);  // start with the dot off
-
-  /*
-  for (int i = 0; i < 7; i++){
-    digitalWrite(i+3, seven_segment_digits[15][i]);
-  }
-  */
-  // New code
-  //digitalWrite(3, 0);
 }
 
 void tick(){
