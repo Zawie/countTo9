@@ -1,26 +1,9 @@
 /*
-  Example 10: 7 Segment Display (Digital Display)
-  Sidekick Basic Kit for TI LaunchPad
-
-  Here we will use a component that include 7 LEDs that are arranged
-  in a grid so that we can form numbers and letters. This is one of the
-  most basic types of displays, but have since been replaced by more
-  popular LCDs (Liquid Crystal Displays), LED matrices,  and other display
-  technologies.
-
-  We will display the different numbers in a single digit countdown
-  sequence.  It is also possible to form letters, but we will just cover
-  numbers 0-9 in the example.
-
-  Hardware Required:
-  * TI LaunchPad
-  * Breadboard BoosterPack
-  * Breadboard
-  * 7 Segment Display
-  * 9x Jumper Wires
-  * 8x 330 ohm resistors (optional)
-
-  This example code is in the public domain.
+  Contributors:
+  Nicco Rossi
+  Kaiyu Hernandez
+  Nathaniel Hejduk
+  Adam Zawierucha
 */
 
 // Define the LED digit patterns for 0 - F in a 2 dimensional array.
@@ -82,7 +65,6 @@ connected to work, but it's ok to connect both if you want.
 /* In the setup function, we set our LED pins as OUTPUT.
  */
 void setup() {
-
   pinMode(3, OUTPUT); // set segment A as output
   pinMode(4, OUTPUT); // set segment B as output
   pinMode(5, OUTPUT); // set segment C as output
