@@ -92,12 +92,14 @@ void setup() {
   digitalWrite(10, HIGH);  // start with the dot off
 }
 
-byte *get_led_representation(char hex_digit){
+int get_led_representation(char hex_digit){
+  //returns the index of the given hex digit in the
+  //seven_segment_digits array
   
   if (hex_digit >= '0' && hex_digit <= '9'){
-    return seven_segment_digits[hex_digit - '0'];
+    return hex_digit - '0';
   } else {
-    return seven_segment_digits[hex_digit - 'A' + 10];
+    return hex_digit - 'A' + 10;
   }
 }
 
