@@ -120,7 +120,7 @@ void disp_all(){
  * Add delay() or sleep() to give some time between the numbers changing.
  */
 void loop() {
-  //test();
+  //tick();
   disp_all();
   delay(2000); // this is the same as delay() but saves power
 }
