@@ -92,6 +92,15 @@ void setup() {
   digitalWrite(10, HIGH);  // start with the dot off
 }
 
+byte *get_led_representation(char hex_digit){
+  
+  if (hex_digit >= '0' && hex_digit <= '9'){
+    return seven_segment_digits[hex_digit - '0'];
+  } else {
+    return seven_segment_digits[hex_digit - 'A' + 10];
+  }
+}
+
 void tick(){
   for (int cur = 3; cur < 10; cur++) {
     for (int pin = 3; pin < 10; pin++) {
