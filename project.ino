@@ -142,21 +142,14 @@ void loop() {
   
   if (button_state != last && button_state == 0){
     // if the state is zero, we increment the count
-    if (switch_state == 0){
-      count += 1;
-      if (count > 15){
-        count = 15;
-      }
+    if (switch_state == 0 && count < 15){
+      count += 1; 
     }
     
     // Otherwise, we decrement the pin
-    if (switch_state == 1){
+    if (switch_state == 1 && count > 0){
       count -= 1;
-      }
-    if (count < 0){
-      count = 0;
     }
-    
     last = button_state;
   } else if (button_state == 1){
     last = button_state;
