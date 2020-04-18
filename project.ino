@@ -62,6 +62,11 @@ byte seven_segment_digits[16][7] = { { 0,0,0,0,0,0,1 }, // display '0'
                                    };
 */
 
+int button_state = 1;
+int last = 1;
+int count = 0;
+int switch_state = 0;
+
 /* Connect the pins of the display accordingly.
 Only one of the VCC (Common Anode) / GND (Common Cathode) pins need to be
 connected to work, but it's ok to connect both if you want.
@@ -89,7 +94,14 @@ void setup() {
   for(int i = 3; i < 10; i++) { // start with segments off
     digitalWrite(i, HIGH);
   }
+
   digitalWrite(10, HIGH);  // start with the dot off
+
+  //Setup the onboard switch SW1
+  pinMode(31, INPUT_PULLUP);
+
+  //Setup the tilt switch
+  pinMode(11, INPUT);
 }
 
 /*
@@ -111,6 +123,7 @@ void update_display( int count ){
   for (int segCount = 0; segCount < 7; ++segCount) {
     digitalWrite(pin, seven_segment_digits[count][segCount]);
     ++pin;
+  }
 }
 
 void tick(){
@@ -141,24 +154,6 @@ void disp_all(){
  * Add delay() or sleep() to give some time between the numbers changing.
  */
 void loop() {
-  //tick();
-  disp_all();
-  delay(2000); // this is the same as delay() but saves power
-}
-
-int button_state = 0;
-int last = 0;
-int count = 0;
-int switch_state = 0;
-
-void setup() {
-  // set pin as input
-  pinMode(31, INPUT_PULLUP);
-  pinMode(11, INPUT);
-  Serial.begin(9600);
-}
-
-void loop() {
   // read state of pin
   button_state = digitalRead(31);
   switch_state = digitalRead(11);
@@ -167,10 +162,11 @@ void loop() {
     // if the state is zero, we increment the count
     if (switch_state == 0){
       count += 1;
-      if (count > 16){
-        count = 16;
+      if (count > 15){
+        count = 15;
       }
     }
+    
     // Otherwise, we decrement the pin
     if (switch_state == 1){
       count -= 1;
@@ -178,7 +174,11 @@ void loop() {
     if (count < 0){
       count = 0;
     }
-  last = button_state;
+    
+    last = button_state;
+  } else if (button_state == 1){
+    last = button_state;
   }
-  Serial.println(count);
+  update_display(count);
+  delay(1); // this is the same as delay() but saves power
 }
