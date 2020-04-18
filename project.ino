@@ -92,6 +92,7 @@ void setup() {
   digitalWrite(10, HIGH);  // start with the dot off
 }
 
+/*
 int get_led_representation(char hex_digit){
   //returns the index of the given hex digit in the
   //seven_segment_digits array
@@ -101,6 +102,15 @@ int get_led_representation(char hex_digit){
   } else {
     return hex_digit - 'A' + 10;
   }
+}
+*/
+
+void update_display( int count ){
+  //updates 7-segment display with value of count in hex
+  int pin = 3;
+  for (int segCount = 0; segCount < 7; ++segCount) {
+    digitalWrite(pin, seven_segment_digits[count][segCount]);
+    ++pin;
 }
 
 void tick(){
