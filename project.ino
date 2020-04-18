@@ -135,3 +135,40 @@ void loop() {
   disp_all();
   delay(2000); // this is the same as delay() but saves power
 }
+
+int button_state = 0;
+int last = 0;
+int count = 0;
+int switch_state = 0;
+
+void setup() {
+  // set pin as input
+  pinMode(31, INPUT_PULLUP);
+  pinMode(11, INPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  // read state of pin
+  button_state = digitalRead(31);
+  switch_state = digitalRead(11);
+  
+  if (button_state != last && button_state == 0){
+    // if the state is zero, we increment the count
+    if (switch_state == 0){
+      count += 1;
+      if (count > 16){
+        count = 16;
+      }
+    }
+    // Otherwise, we decrement the pin
+    if (switch_state == 1){
+      count -= 1;
+      }
+    if (count < 0){
+      count = 0;
+    }
+  last = button_state;
+  }
+  Serial.println(count);
+}
