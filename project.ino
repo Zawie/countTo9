@@ -136,6 +136,7 @@ void iterate_segments(){
 
 /*
 void disp_all(){
+  //Iterates through all possibilities of 7-segment display; just a debug function
   for (int count = 16; count > 0; --count) {
     int pin = 3;
     for (int segCount = 0; segCount < 7; ++segCount) {
