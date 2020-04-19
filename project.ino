@@ -31,25 +31,6 @@ byte seven_segment_digits[16][7] = { { 0,0,0,0,0,0,1 }, // display '0'
                                      { 0,1,1,1,0,0,0 }  // display 'F'
                                    };
 
-// Common Cathode version
-/* byte seven_segment_digits[10][7] = { { 1,1,1,1,1,1,0 }, // display '0'
-                                     { 0,1,1,0,0,0,0 }, // display '1'
-                                     { 1,1,0,1,1,0,1 }, // display '2'
-                                     { 1,1,1,1,0,0,1 }, // display '3'
-                                     { 0,1,1,0,0,1,1 }, // display '4'
-                                     { 1,0,1,1,0,1,1 }, // display '5'
-                                     { 1,0,1,1,1,1,1 }, // display '6'
-                                     { 1,1,1,0,0,0,0 }, // display '7'
-                                     { 1,1,1,1,1,1,1 }, // display '8'
-                                     { 1,1,1,0,0,1,1 }  // display '9'
-                                   };
-*/
-
-int button_state = 1;
-int last = 1;
-int count = 0;
-int switch_state = 0;
-
 /* Connect the pins of the display accordingly.
 Only one of the VCC (Common Anode) / GND (Common Cathode) pins need to be
 connected to work, but it's ok to connect both if you want.
@@ -62,8 +43,14 @@ connected to work, but it's ok to connect both if you want.
 /////////////BOTTOM/////////////
 */
 
+// Initial variable values
+int button_state = 1;
+int last = 1;
+int count = 0;
+int switch_state = 0;
+
 /* In the setup function, we set our LED pins as OUTPUT.
- */
+*/
 void setup() {
   pinMode(3, OUTPUT); // set segment A as output
   pinMode(4, OUTPUT); // set segment B as output
@@ -100,7 +87,40 @@ void update_display( int count ){
   }
 }
 
-void tick(){
+/* In the loop section we will begin displaying the different numbers.
+ * Add delay() or sleep() to give some time between the numbers changing.
+ */
+void loop() {
+  // Read pin states
+  button_state = digitalRead(31);
+  switch_state = digitalRead(11);
+  
+  //Check if state indicates action needs to take place
+  if (button_state != last && button_state == 0){
+    // if the state is zero, we increment the count, max at 15
+    if (switch_state == 0 && count < 15){
+      count += 1; 
+    }
+    // Otherwise, we decrement the pin, min at 0
+    if (switch_state == 1 && count > 0){
+      count -= 1;
+    }
+    //Store old state
+    last = button_state;
+  } else if (button_state == 1){
+    //Store old state
+    last = button_state;
+  }
+  //Update display
+  update_display(count);
+  //Wait
+  delay(1);
+}
+
+//Extra debug functions
+/*
+void iterate_segments(){
+  //Iterates through all the segment lights: purely for debugging
   for (int cur = 3; cur < 10; cur++) {
     for (int pin = 3; pin < 10; pin++) {
       if (cur == pin) {
@@ -112,7 +132,9 @@ void tick(){
     delay(1000); // this is the same as delay() but saves power
   }
 }
+*/
 
+/*
 void disp_all(){
   for (int count = 16; count > 0; --count) {
     int pin = 3;
@@ -123,29 +145,4 @@ void disp_all(){
     delay(1000); // this is the same as delay() but saves power
   }
 }
-
-/* In the loop section we will begin displaying the different numbers.
- * Add delay() or sleep() to give some time between the numbers changing.
- */
-void loop() {
-  // read state of pin
-  button_state = digitalRead(31);
-  switch_state = digitalRead(11);
-  
-  if (button_state != last && button_state == 0){
-    // if the state is zero, we increment the count
-    if (switch_state == 0 && count < 15){
-      count += 1; 
-    }
-    
-    // Otherwise, we decrement the pin
-    if (switch_state == 1 && count > 0){
-      count -= 1;
-    }
-    last = button_state;
-  } else if (button_state == 1){
-    last = button_state;
-  }
-  update_display(count);
-  delay(1); // this is the same as delay() but saves power
-}
+*/
