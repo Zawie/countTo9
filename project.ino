@@ -1,6 +1,6 @@
 /*
   Contributors:
-  Nicco Rossi
+  Nico Rossi
   Kaiyu Hernandez
   Nathaniel Hejduk
   Adam Zawierucha
